@@ -1,8 +1,4 @@
-﻿/*
- * 作者：关尔
- * 时间：2018年1月11日
- * 关注“洪流学堂”公众号，让你快人几步
- */
+﻿
 
 using UnityEngine;
 using UnityEngine.UI;
