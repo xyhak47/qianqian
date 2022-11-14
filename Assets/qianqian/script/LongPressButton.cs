@@ -2,9 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-/// <summary>
-/// 我的自定义Button，继承 Button
-/// </summary>
+
 public class LongPressButton : Button
 {
     // 长按

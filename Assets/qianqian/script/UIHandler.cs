@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class UIHandler : MonoBehaviour
 {
@@ -13,8 +14,15 @@ public class UIHandler : MonoBehaviour
 
     public LongPressButton btn;
 
+    [HideInInspector]
     public UnityEvent OnLongPressBegin = new UnityEvent();
+
+    [HideInInspector]
     public UnityEvent OnLongPressEnd = new UnityEvent();
+
+    public Text RecognizedSpeech;
+
+    private bool isLoading = false;
 
 
     // Start is called before the first frame update
@@ -22,7 +30,7 @@ public class UIHandler : MonoBehaviour
     {
         btn.OnLongPress_begin.AddListener(() => 
         {
-            if(OnLongPressBegin != null)
+            if(OnLongPressBegin != null && !isLoading)
             {
                 OnLongPressBegin.Invoke();
                 //Debug.Log("OnLongPress_begin");
@@ -31,11 +39,21 @@ public class UIHandler : MonoBehaviour
 
         btn.OnLongPress_end.AddListener(() =>
         {
-            if (OnLongPressEnd != null)
+            if (OnLongPressEnd != null && !isLoading)
             {
                 OnLongPressEnd.Invoke();
                 //Debug.Log("OnLongPress_end");
             }
         });
+    }
+
+    public void ShowRecognizedSpeech(string speech)
+    {
+        RecognizedSpeech.text = speech;
+    }
+
+    public void ShowLoading(bool loading)
+    {
+        isLoading = loading;
     }
 }

@@ -6,8 +6,8 @@ using Wit.BaiduAip.Speech;
 
 public class TtsDemo : MonoBehaviour
 {
-    public string APIKey = "";
-    public string SecretKey = "";
+    public string APIKey = "Q8f3j0kwF5GSXx8MdwGpqKk5";
+    public string SecretKey = "Z79qjlhLnOVB0pVG5SfZcnZS503UG8mh";
     public Button SynthesisButton;
     public InputField Input;
     public Text DescriptionText;

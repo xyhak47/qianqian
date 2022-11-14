@@ -47,7 +47,13 @@ namespace Wit.BaiduAip.Speech
                 callback(JsonUtility.FromJson<AsrResponse>(www.downloadHandler.text));
             }
             else
+            {
+                AsrResponse resp = new AsrResponse();
+                resp.err_msg = www.error;
+                callback(resp);
+
                 Debug.LogError(www.error);
+            }
         }
 
         /// <summary>
