@@ -13,6 +13,8 @@ public class UIHandler : MonoBehaviour
     }
 
     public LongPressButton btn;
+    public Button btn_test;
+    public Button btn_test1;
 
     [HideInInspector]
     public UnityEvent OnLongPressBegin = new UnityEvent();
@@ -33,7 +35,6 @@ public class UIHandler : MonoBehaviour
             if(OnLongPressBegin != null && !isLoading)
             {
                 OnLongPressBegin.Invoke();
-                //Debug.Log("OnLongPress_begin");
             }
         });
 
@@ -42,8 +43,18 @@ public class UIHandler : MonoBehaviour
             if (OnLongPressEnd != null && !isLoading)
             {
                 OnLongPressEnd.Invoke();
-                //Debug.Log("OnLongPress_end");
             }
+        });
+
+        // test
+        btn_test.onClick.AddListener(() => 
+        {
+            SpeechManager.Instance.SynthesisSpeech("ÄãºÃ");
+        });
+
+        btn_test1.onClick.AddListener(() =>
+        {
+            SpeechManager.Instance.CheckDevice();
         });
     }
 
@@ -56,4 +67,6 @@ public class UIHandler : MonoBehaviour
     {
         isLoading = loading;
     }
+
+
 }

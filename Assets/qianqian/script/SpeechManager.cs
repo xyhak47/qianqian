@@ -24,13 +24,16 @@ public class SpeechManager : MonoBehaviour
 
     private void Start()
     {
+        CheckDevice();
+
         _audioSource = gameObject.GetComponent<AudioSource>();
 
         UIHandler.Instance.OnLongPressBegin.AddListener(UserSpeechBegin);
         UIHandler.Instance.OnLongPressEnd.AddListener(UserSpeechEnd);
-
+                     
         // voice to word
         _asr = new Asr(APIKey, SecretKey);
+        StartCoroutine(_asr.GetAccessToken());
 
 
         // word to voice
@@ -41,7 +44,7 @@ public class SpeechManager : MonoBehaviour
     private void UserSpeechBegin()
     {
         //Debug.Log("BeginSpeech");
-        //UIHandler.Instance.ShowRecognizedSpeech("BeginSpeech");
+        UIHandler.Instance.ShowRecognizedSpeech("BeginSpeech");
 
         _clipRecord = Microphone.Start(null, false, 30, 16000);
 
@@ -54,7 +57,7 @@ public class SpeechManager : MonoBehaviour
     private void UserSpeechEnd()
     {
         //Debug.Log("EndSpeech");
-        //UIHandler.Instance.ShowRecognizedSpeech("EndSpeech");
+        UIHandler.Instance.ShowRecognizedSpeech("EndSpeech");
 
         Microphone.End(null);
         var data = Asr.ConvertAudioClipToPCM16(_clipRecord);
@@ -63,12 +66,8 @@ public class SpeechManager : MonoBehaviour
             if(s.result != null && s.result.Length > 0)
             {
                 string result = s.result[0];
-                string matched_speech = SpeechMatcher.Instance.Match(result);
 
-                string question_and_answer = "question = " + result + " answer = " + matched_speech;
-                UIHandler.Instance.ShowRecognizedSpeech(question_and_answer);
-
-                Synthesis(matched_speech);
+                SynthesisSpeech(result);
             }
             else
             {
@@ -77,12 +76,27 @@ public class SpeechManager : MonoBehaviour
         }));
     }
 
+    public void SynthesisSpeech(string speech)
+    {
+        string matched_speech = SpeechMatcher.Instance.Match(speech);
+
+        string question_and_answer = "question = " + speech + " answer = " + matched_speech;
+        UIHandler.Instance.ShowRecognizedSpeech(question_and_answer);
+
+        Synthesis(matched_speech);
+    }
+
     private void Synthesis(string speech)
     {
         StartCoroutine(_tts.Synthesis(speech, s =>
         {
             if (s.Success)
             {
+                if(_audioSource.clip != null)
+                {
+                    _audioSource.clip.UnloadAudioData();
+                    _audioSource.clip = null;
+                }
                 _audioSource.clip = s.clip;
                 _audioSource.Play();
             }
@@ -92,4 +106,20 @@ public class SpeechManager : MonoBehaviour
             }
         }));
     }
+
+    public void CheckDevice()
+    {
+        string[] devices = Microphone.devices;
+        if (devices.Length > 0)
+        {
+            //Debug.Log("设备有麦克风:" + devices[0]);
+            UIHandler.Instance.ShowRecognizedSpeech("设备有麦克风:" + devices[0]);
+        }
+        else
+        {
+            //Debug.Log("设备没有麦克风");
+            UIHandler.Instance.ShowRecognizedSpeech("设备没有麦克风");
+        }
+    }
+
 }
