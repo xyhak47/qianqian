@@ -49,12 +49,13 @@ public class UIHandler : MonoBehaviour
         // test
         btn_test.onClick.AddListener(() => 
         {
-            SpeechManager.Instance.SynthesisSpeech("ÄãºÃ");
+            //SpeechManager.Instance.SynthesisSpeech("ÄãºÃ");
+            ModelAnimation.Instance.Play(ModelAnimation.Type.smile);
         });
 
         btn_test1.onClick.AddListener(() =>
         {
-            SpeechManager.Instance.CheckDevice();
+            //SpeechManager.Instance.CheckDevice();
         });
     }
 
