@@ -119,6 +119,8 @@ namespace Wit.BaiduAip.Speech
             {
                 Debug.LogError(www.error);
             }
+
+            www.Dispose();
         }
     }
 }

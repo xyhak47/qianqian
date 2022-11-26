@@ -13164,6 +13164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8463063107723940218}
   - component: {fileID: 7814509399200187479}
+  - component: {fileID: 8857001838661669291}
   m_Layer: 0
   m_Name: qianqian_with_smile
   m_TagString: Untagged
@@ -13202,6 +13203,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3c68c25fff2cf44913ac43e2dff463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 8857001838661669291}
+--- !u!95 &8857001838661669291
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9095309315843623872}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a27cdb2ce6d0b1e4b8069038cf31e0cc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9122421245442435658
 GameObject:
   m_ObjectHideFlags: 0
