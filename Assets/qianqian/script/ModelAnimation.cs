@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class ModelAnimation : MonoBehaviour
 {
-    public static ModelAnimation Instance = null;
-    ModelAnimation()
-    {
-        Instance = this;
-    }
-
     public class Type
     {
         static public string smile = "smile";
+        static public string talk_long = "talk_long";
+        static public string talk_short = "talk_short";
     };
 
 
 
-    public Animator animator;
+    private Animator animator;
 
 
     void Start()
     {
+        animator = GetComponent<Animator>();
     }
 
     public void Play(string name)

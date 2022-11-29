@@ -11,6 +11,11 @@ public class SpeechMatcher : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        
+    }
+
     public string Match(string speech)
     {
         return GetSpeech(speech);

@@ -50,7 +50,7 @@ public class UIHandler : MonoBehaviour
         btn_test.onClick.AddListener(() => 
         {
             //SpeechManager.Instance.SynthesisSpeech("ÄãºÃ");
-            ModelAnimation.Instance.Play(ModelAnimation.Type.smile);
+            ModelAnimationController.Instance.Play(ModelAnimation.Type.talk_short);
         });
 
         btn_test1.onClick.AddListener(() =>
