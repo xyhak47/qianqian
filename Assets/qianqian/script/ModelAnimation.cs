@@ -6,7 +6,10 @@ public class ModelAnimation : MonoBehaviour
 {
     public class Type
     {
+        static public string idle = "idle";
+
         static public string smile = "smile";
+
         static public string talk_long = "talk_long";
         static public string talk_short = "talk_short";
     };

@@ -49,7 +49,7 @@ public class SpeechMatcher : MonoBehaviour
                 "无论怎么玩，都让人心情舒畅。";
         }
 
-        return "未识别";
+        return "听不清，再说一遍";
     }
 
     private string GetToday()

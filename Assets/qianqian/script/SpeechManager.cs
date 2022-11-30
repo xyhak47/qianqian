@@ -43,6 +43,12 @@ public class SpeechManager : MonoBehaviour
 
     private void UserSpeechBegin()
     {
+        if (_audioSource.isPlaying)
+        {
+            ResetSelf();
+        }
+
+
         //Debug.Log("BeginSpeech");
         UIHandler.Instance.ShowRecognizedSpeech("BeginSpeech");
 
@@ -71,6 +77,7 @@ public class SpeechManager : MonoBehaviour
             }
             else
             {
+                Synthesis("听不清，再说一遍");
                 UIHandler.Instance.ShowRecognizedSpeech("未识别:" + s.err_msg);
             }
         }));
@@ -92,17 +99,25 @@ public class SpeechManager : MonoBehaviour
         {
             if (s.Success)
             {
-                if(_audioSource.clip != null)
-                {
-                    _audioSource.clip.UnloadAudioData();
-                    _audioSource.clip = null;
-                }
+                //if(restart)
+                //{
+                //    _audioSource.Stop();
+                //    _audioSource.clip = null;
+                //    return;
+                //}
+
                 _audioSource.clip = s.clip;
                 _audioSource.Play();
+
+                float duration = _audioSource.clip.length;
+                string type = duration >= 3f ? ModelAnimation.Type.talk_long : ModelAnimation.Type.talk_short;
+
+                ModelAnimationController.Instance.Play(type, duration, ()=>
+                {
+                });
             }
             else
             {
-        
             }
         }));
     }
@@ -120,6 +135,14 @@ public class SpeechManager : MonoBehaviour
             //Debug.Log("设备没有麦克风");
             UIHandler.Instance.ShowRecognizedSpeech("设备没有麦克风");
         }
+    }
+
+    private void ResetSelf()
+    {
+        _audioSource.Stop();
+        _audioSource.clip = null;
+
+        ModelAnimationController.Instance.Play(ModelAnimation.Type.idle);
     }
 
 }
