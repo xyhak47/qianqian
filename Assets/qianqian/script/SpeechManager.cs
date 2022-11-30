@@ -22,6 +22,9 @@ public class SpeechManager : MonoBehaviour
     private Tts _tts;
 
 
+    private bool InUserInput = false;
+
+
     private void Start()
     {
         CheckDevice();
@@ -43,6 +46,8 @@ public class SpeechManager : MonoBehaviour
 
     private void UserSpeechBegin()
     {
+        InUserInput = true;
+
         if (_audioSource.isPlaying)
         {
             ResetSelf();
@@ -69,7 +74,12 @@ public class SpeechManager : MonoBehaviour
         var data = Asr.ConvertAudioClipToPCM16(_clipRecord);
         StartCoroutine(_asr.Recognize(data, s =>
         {
-            if(s.result != null && s.result.Length > 0)
+            if (InUserInput)
+            {
+                return;
+            }
+
+            if (s.result != null && s.result.Length > 0)
             {
                 string result = s.result[0];
 
@@ -81,6 +91,8 @@ public class SpeechManager : MonoBehaviour
                 UIHandler.Instance.ShowRecognizedSpeech("Î´Ê¶±ð:" + s.err_msg);
             }
         }));
+
+        InUserInput = false;
     }
 
     public void SynthesisSpeech(string speech)
@@ -95,26 +107,24 @@ public class SpeechManager : MonoBehaviour
 
     private void Synthesis(string speech)
     {
-        StartCoroutine(_tts.Synthesis(speech, s =>
+        StartCoroutine(_tts.Synthesis(speech, response =>
         {
-            if (s.Success)
+            if(InUserInput)
             {
-                //if(restart)
-                //{
-                //    _audioSource.Stop();
-                //    _audioSource.clip = null;
-                //    return;
-                //}
+                return;
+            }
 
-                _audioSource.clip = s.clip;
-                _audioSource.Play();
-
-                float duration = _audioSource.clip.length;
+            if (response.Success)
+            {
+                float duration = response.clip.length;
                 string type = duration >= 3f ? ModelAnimation.Type.talk_long : ModelAnimation.Type.talk_short;
 
                 ModelAnimationController.Instance.Play(type, duration, ()=>
                 {
                 });
+
+                _audioSource.clip = response.clip;
+                _audioSource.Play();
             }
             else
             {
@@ -139,8 +149,9 @@ public class SpeechManager : MonoBehaviour
 
     private void ResetSelf()
     {
+        StopAllCoroutines();
+
         _audioSource.Stop();
-        _audioSource.clip = null;
 
         ModelAnimationController.Instance.Play(ModelAnimation.Type.idle);
     }

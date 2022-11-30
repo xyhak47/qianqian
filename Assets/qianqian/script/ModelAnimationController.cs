@@ -41,6 +41,7 @@ public class ModelAnimationController : MonoBehaviour
 
     public void Play(string name, float duration, Action callback)
     {
+        StopAllCoroutines();
         StartCoroutine(_Play(name, duration, callback));
     }
 }
