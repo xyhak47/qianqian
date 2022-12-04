@@ -151,14 +151,14 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.99688715, b: 0.8261455, a: 1}
+  m_Color: {r: 0.8588236, g: 0.72156864, b: 0.6431373, a: 1}
   m_Intensity: 0.8
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -426,7 +426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413530814}
   m_LocalRotation: {x: 0.07219377, y: 0, z: 0, w: 0.9973907}
-  m_LocalPosition: {x: 0, y: 1.4, z: -1.95}
+  m_LocalPosition: {x: 0, y: 2.46, z: -3.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1378,10 +1378,10 @@ RectTransform:
   m_Father: {fileID: 1218502992}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 960.3, y: 0}
-  m_SizeDelta: {x: 3840, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 960.30005, y: 0}
+  m_SizeDelta: {x: 2760, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1530360046
 MonoBehaviour:
@@ -1403,8 +1403,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 474e3dace77cc9e4ca259f2279885704, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 99f4fcb64580d0c4d9d30ab30f4296ab, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1628,21 +1628,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5891582409966863088, guid: 44d89b92dc119cb4fb18490de836bf79,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5891582409966863088, guid: 44d89b92dc119cb4fb18490de836bf79,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5891582409966863088, guid: 44d89b92dc119cb4fb18490de836bf79,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5891582409966863088, guid: 44d89b92dc119cb4fb18490de836bf79,
         type: 3}
