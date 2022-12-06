@@ -21,8 +21,14 @@ public class Model : MonoBehaviour
         transform.Rotate(Vector3.down * delta, Space.World);
     }
 
-    public void Scale(Vector3 scale)
+    public void MoveZ(float percent)
     {
-        transform.localScale = scale;
+        // from -40 ~ 10
+        float min = -40, max = 10;
+
+        float z = transform.position.z * percent;
+        z = Mathf.Clamp(z, min, max);
+
+        transform.position.Set(transform.position.x, transform.position.y, z);
     }
 }

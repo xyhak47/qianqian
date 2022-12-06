@@ -29,7 +29,10 @@ public class ModelController : MonoBehaviour
         model.Rotate(delta);
     }
 
-    public void Scale(Vector3 scale)
+    public void MoveZ(float percent)
     {
+        UIHandler.Instance.ShowRecognizedSpeech("percent = " + percent);
+
+        model.MoveZ(percent);
     }
 }

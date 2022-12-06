@@ -3376,7 +3376,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4460181225920602882, guid: d734131e03bc00a4d894c644ec2d9fa5, type: 3}
+  - {fileID: 2100000, guid: 1b3ced4195a27644d8972e19b66a0d4b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8545,6 +8545,7 @@ GameObject:
   - component: {fileID: 5891582409966863088}
   - component: {fileID: 1431949664553988264}
   - component: {fileID: 1431949664553988265}
+  - component: {fileID: 9091844806517933225}
   m_Layer: 0
   m_Name: qianqian_model
   m_TagString: Untagged
@@ -8561,7 +8562,7 @@ Transform:
   m_GameObject: {fileID: 6523686506227537994}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -0, y: -3.51, z: 93.4}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 25, y: 25, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6850193813149802935}
@@ -8600,6 +8601,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb3c68c25fff2cf44913ac43e2dff463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9091844806517933225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6523686506227537994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b29a6f9e36bcd94492c4ee791951c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6576818589280125462
