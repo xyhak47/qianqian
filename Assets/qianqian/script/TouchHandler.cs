@@ -54,9 +54,16 @@ public class TouchHandler : MonoBehaviour
                 float oldDistance = Vector2.Distance(oldTouch1.position, oldTouch2.position);
                 float newDistance = Vector2.Distance(newTouch1.position, newTouch2.position);
 
-                float offset_percent = (newDistance - oldDistance) / oldDistance;
+                //UIHandler.Instance.ShowRecognizedSpeech("delta distance = " + (newDistance - oldDistance));
 
-                ModelController.Instance.MoveZ(offset_percent);
+                if (Mathf.Abs(newDistance - oldDistance) > 3f)
+                {
+                    float scale = newDistance / oldDistance;
+                    ModelController.Instance.MoveZ(scale);
+                }
+
+                oldTouch2 = newTouch2;
+                oldTouch1 = newTouch1;
             } 
         }
     }

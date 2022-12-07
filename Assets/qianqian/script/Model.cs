@@ -21,14 +21,15 @@ public class Model : MonoBehaviour
         transform.Rotate(Vector3.down * delta, Space.World);
     }
 
-    public void MoveZ(float percent)
+    public void MoveZ(float scale)
     {
-        // from -40 ~ 10
-        float min = -40, max = 10;
+        float min = 1, max = 45;
 
-        float z = transform.position.z * percent;
+        float z = transform.position.z / scale; 
         z = Mathf.Clamp(z, min, max);
 
-        transform.position.Set(transform.position.x, transform.position.y, z);
+       // UIHandler.Instance.ShowRecognizedSpeech("z = " + z + ", percent = " + scale);
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, z);
     }
 }
