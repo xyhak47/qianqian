@@ -26,18 +26,25 @@ public class TouchHandler : MonoBehaviour
             Vector2 deltaPos = touch.deltaPosition;//触摸点位置，在两帧时间内的改变（即这一帧触摸点的位置，减去前一帧触摸点的位置）
 
 
-            //if (Mathf.Abs(touch.deltaPosition.x) > Mathf.Abs(touch.deltaPosition.y))
-            //{
-            //    //绕Y轴旋转
-            //    transform.Rotate(Vector3.down * deltaPos.x, Space.World);
-            //}
-            //else
-            //{
-            //    //绕X轴旋转
-            //    transform.Rotate(Vector3.right * deltaPos.y, Space.World);
-            //}
+            if (Mathf.Abs(touch.deltaPosition.x) > Mathf.Abs(touch.deltaPosition.y))
+            {
+                //绕Y轴旋转
+                CameraViewController.Instance.RotateAroundX(deltaPos.x/10f);
+            }
+            else
+            {
+                if (CameraViewController.Instance.InZoomMode)
+                {
+                    CameraViewController.Instance.MoveY(-deltaPos.y/100f);
+                }
+                else
+                {
+                    //绕X轴旋转
+                    CameraViewController.Instance.RotateAroundY(-deltaPos.y / 100f);
+                }
+            }
 
-            ModelController.Instance.Rotate(deltaPos.x);
+            // ModelController.Instance.HandleTouchXY(deltaPos);
         }
         else if(2 == Input.touchCount)
         {
@@ -59,7 +66,8 @@ public class TouchHandler : MonoBehaviour
                 if (Mathf.Abs(newDistance - oldDistance) > 3f)
                 {
                     float scale = newDistance / oldDistance;
-                    ModelController.Instance.MoveZ(scale);
+                    //ModelController.Instance.HandleTouchZ(scale);
+                    CameraViewController.Instance.Zoom(scale - 1 >= 0, scale);
                 }
 
                 oldTouch2 = newTouch2;

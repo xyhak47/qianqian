@@ -24,13 +24,25 @@ public class ModelController : MonoBehaviour
         
     }
 
-    public void Rotate(float delta)
+    public void HandleTouchXY(Vector2 delta)
     {
-        model.Rotate(delta);
+        if(model.InScale)
+        {
+            model.Rotate(delta);
+        }
+        else
+        {
+
+        }
     }
 
-    public void MoveZ(float scale)
+    public void HandleTouchZ(float scale)
     {
         model.MoveZ(scale);
+    }
+
+    public GameObject GetModelHead()
+    {
+        return model.GetModelHead();
     }
 }
