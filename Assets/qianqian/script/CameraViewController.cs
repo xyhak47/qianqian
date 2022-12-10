@@ -24,7 +24,7 @@ public class CameraViewController : MonoBehaviour
         target = ModelController.Instance.model.transform;
         origin_distance = Vector3.Distance(transform.position, target.transform.position);
 
-        transform.LookAt(ModelController.Instance.GetModelHead().transform);
+        //transform.LookAt(ModelController.Instance.GetModelHead().transform);
     }
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class CameraViewController : MonoBehaviour
         camerarotate();
         camerazoom();
 
-        Debug.Log(transform.position.x + " " + transform.position.y + " " + transform.position.z);
+        //Debug.Log(transform.position.x + " " + transform.position.y + " " + transform.position.z);
 #endif
     }
 
@@ -71,6 +71,8 @@ public class CameraViewController : MonoBehaviour
 
     public void RotateAroundY(float y)
     {
+        //return;
+
         if (InZoomMode) return;
 
         float roateSpeed = 5f;
@@ -135,6 +137,25 @@ public class CameraViewController : MonoBehaviour
 
     public void Zoom(bool In, float delta)
     {
+        //use camera fov
+        delta *= !In ? 1 : -1;
+        delta *= 0.3f;
+        float fov = Camera.main.fieldOfView;
+        fov += delta;
+        float min = 6f, max = 36f;
+        fov = Mathf.Clamp(fov, min, max);
+        Camera.main.fieldOfView = fov;
+
+        InZoomMode = fov <= 26f;
+
+        if (!In && fov == max)
+        {
+            ModelController.Instance.LerpModelYtoOriginIfNeeded();
+        }
+
+        return;
+
+
         float distance = Vector3.Distance(transform.position, target.transform.position);
         //Debug.Log("distance in zoom = " + distance + " In = " + In);
         float limit_near = 50f;
@@ -147,7 +168,7 @@ public class CameraViewController : MonoBehaviour
 
         InZoomMode = distance <= 70f;
 
-        if (need_reset_camera_position && InZoomMode)
+        if (!In && need_reset_camera_position && InZoomMode)
         {
             ModelController.Instance.ResetPosition();
 

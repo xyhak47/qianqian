@@ -20,10 +20,14 @@ public class ModelAnimation : MonoBehaviour
 
     private Animator animator;
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
 
     void Start()
     {
-        animator = GetComponent<Animator>();
     }
 
     public void Play(string name)

@@ -65,13 +65,18 @@ public class Model : MonoBehaviour
         float z = transform.position.z;
         float y = transform.position.y;
         y += delta;
-        //float min = -16f, max = 8.5f;
-        //y = Mathf.Clamp(y, min, max);
+        float min = -38f, max = -4f;
+        y = Mathf.Clamp(y, min, max);
         transform.position = new Vector3(x, y, z);
     }
 
     public void ResetPosition()
     {
         transform.position = origin_postion;
+    }
+
+    public void LerpModelYtoOriginIfNeeded()
+    {
+        transform.position = Vector3.Lerp(transform.position, origin_postion, 0.1f);
     }
 }

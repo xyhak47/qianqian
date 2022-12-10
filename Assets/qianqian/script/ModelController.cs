@@ -15,7 +15,7 @@ public class ModelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ModelAnimationController.Instance.Play(ModelAnimation.Type.idle);
     }
 
     // Update is called once per frame
@@ -63,5 +63,10 @@ public class ModelController : MonoBehaviour
     public void ResetPosition()
     {
         model.ResetPosition();
+    }
+
+    public void LerpModelYtoOriginIfNeeded()
+    {
+        model.LerpModelYtoOriginIfNeeded();
     }
 }
