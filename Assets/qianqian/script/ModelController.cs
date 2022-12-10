@@ -36,6 +36,11 @@ public class ModelController : MonoBehaviour
         }
     }
 
+    public void MoveY(float delta)
+    {
+        model.MoveY(delta);
+    }
+
     public void HandleTouchZ(float scale)
     {
         model.MoveZ(scale);
@@ -44,5 +49,19 @@ public class ModelController : MonoBehaviour
     public GameObject GetModelHead()
     {
         return model.GetModelHead();
+    }
+
+    public void HandleScale(float scale)
+    {
+        scale = Mathf.Clamp(scale, 1f, 3f);
+
+        model.HandleScale(scale);
+
+        CameraViewController.Instance.InZoomMode = scale >= 2f;
+    }
+
+    public void ResetPosition()
+    {
+        model.ResetPosition();
     }
 }

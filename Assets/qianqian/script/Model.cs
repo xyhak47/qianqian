@@ -9,6 +9,9 @@ public class Model : MonoBehaviour
 
     private GameObject head = null;
 
+    private Vector3 origin_postion;
+
+
     private void Awake()
     {
         head = transform.Find("head").gameObject;
@@ -17,6 +20,7 @@ public class Model : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        origin_postion = transform.position;
     }
 
     // Update is called once per frame
@@ -48,5 +52,26 @@ public class Model : MonoBehaviour
     public GameObject GetModelHead()
     {
         return head;
+    }
+
+    public void HandleScale(float scale)
+    {
+        transform.localScale *= scale;
+    }
+
+    public void MoveY(float delta)
+    {
+        float x = transform.position.x;
+        float z = transform.position.z;
+        float y = transform.position.y;
+        y += delta;
+        //float min = -16f, max = 8.5f;
+        //y = Mathf.Clamp(y, min, max);
+        transform.position = new Vector3(x, y, z);
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = origin_postion;
     }
 }

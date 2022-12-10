@@ -36,12 +36,14 @@ public class ModelAnimationController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         Play(ModelAnimation.Type.idle);
 
-        callback();
+        if(callback != null)
+        {
+            callback();
+        }
     }
 
     public void Play(string name, float duration, Action callback)
     {
-        StopAllCoroutines();
         StartCoroutine(_Play(name, duration, callback));
     }
 }

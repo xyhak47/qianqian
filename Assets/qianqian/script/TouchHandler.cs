@@ -67,7 +67,8 @@ public class TouchHandler : MonoBehaviour
                 {
                     float scale = newDistance / oldDistance;
                     //ModelController.Instance.HandleTouchZ(scale);
-                    CameraViewController.Instance.Zoom(scale - 1 >= 0, scale);
+                    bool zoom_in = scale - 1 >= 0;
+                    CameraViewController.Instance.Zoom(zoom_in, scale);
                 }
 
                 oldTouch2 = newTouch2;

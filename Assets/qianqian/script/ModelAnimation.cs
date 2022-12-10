@@ -12,6 +12,8 @@ public class ModelAnimation : MonoBehaviour
 
         static public string talk_long = "talk_long";
         static public string talk_short = "talk_short";
+
+        static public string eye = "eye";
     };
 
 

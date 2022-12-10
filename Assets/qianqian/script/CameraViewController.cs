@@ -11,21 +11,20 @@ public class CameraViewController : MonoBehaviour
     }
 
     private Transform target;
-
+    private float origin_distance;
 
     public bool InZoomMode = false;
-
-    private Vector3 zoom_direction;
+    private bool need_reset_camera_position = false;
+    private float y_offset_in_MoveY = 0;
+    private Vector3 camera_pos;
 
     // Start is called before the first frame update
     void Start()
     {
         target = ModelController.Instance.model.transform;
+        origin_distance = Vector3.Distance(transform.position, target.transform.position);
 
-        zoom_direction = ModelController.Instance.GetModelHead().transform.position - transform.position;
-        zoom_direction.Normalize();
-
-        Debug.Log(zoom_direction);
+        transform.LookAt(ModelController.Instance.GetModelHead().transform);
     }
 
     // Update is called once per frame
@@ -34,6 +33,8 @@ public class CameraViewController : MonoBehaviour
 #if UNITY_EDITOR
         camerarotate();
         camerazoom();
+
+        Debug.Log(transform.position.x + " " + transform.position.y + " " + transform.position.z);
 #endif
     }
 
@@ -70,9 +71,11 @@ public class CameraViewController : MonoBehaviour
 
     public void RotateAroundY(float y)
     {
+        if (InZoomMode) return;
+
         float roateSpeed = 5f;
         float rotatedAngle = transform.eulerAngles.x + y * roateSpeed;
-        float angle_min = 5f, angle_max = 20f;
+        float angle_min = 5f, angle_max = 40f;
 
         if (rotatedAngle <= angle_min)
         {
@@ -86,48 +89,92 @@ public class CameraViewController : MonoBehaviour
         {
             transform.RotateAround(target.transform.position, transform.right, y * roateSpeed);
         }
+
+        StoreCameraPosition();
     }
 
     public void RotateAroundX(float x)
     {
+        //need_reset_camera_position = true;
+
         float speed = 5f;
         transform.RotateAround(target.transform.position, Vector3.up, x * speed);
+
+        StoreCameraPosition();
     }
 
     public void MoveY(float delta_y)
     {
-        float x = transform.position.x;
-        float z = transform.position.z;
-        transform.Translate(Vector3.up * (delta_y * 50f) * Time.deltaTime);
+        if (!InZoomMode) return;
 
-        float y = transform.position.y;
-        float min = -25f, max = 10.94f;
-        y = Mathf.Clamp(y, min, max);
-        transform.position = new Vector3(x, y, z);
+        need_reset_camera_position = true;
+
+        //transform.Translate(Vector3.up * (delta_y * 50f) * Time.deltaTime);
+
+        //float x = transform.position.x;
+        //float z = transform.position.z;
+        //float y = transform.position.y;
+        //y += delta_y;
+        ////float min = -16f, max = 8.5f;
+        ////y = Mathf.Clamp(y, min, max);
+        //transform.position = new Vector3(x, y, z);
+
+        //y_offset_in_MoveY = y;
+
+
+
+        // use model y
+        ModelController.Instance.MoveY(-delta_y);
+
     }
 
-    public void MoveX(float x)
-    {
-        transform.Translate(Vector3.left * (x * 50f) * Time.deltaTime);
-    }
+    //public void MoveX(float x)
+    //{
+    //    transform.Translate(Vector3.left * (x * 50f) * Time.deltaTime);
+    //}
 
     public void Zoom(bool In, float delta)
     {
+        float distance = Vector3.Distance(transform.position, target.transform.position);
+        //Debug.Log("distance in zoom = " + distance + " In = " + In);
+        float limit_near = 50f;
+        float limit_far = origin_distance;
+        bool too_near = distance <= limit_near;
+        bool too_far = distance >= limit_far;
+
+        if (In && too_near) return;
+        if (!In && too_far) return;
+
+        InZoomMode = distance <= 70f;
+
+        if (need_reset_camera_position && InZoomMode)
+        {
+            ModelController.Instance.ResetPosition();
+
+            //transform.position = camera_pos;
+            //transform.position = new Vector3(
+            //    transform.position.x,
+            //    transform.position.y - y_offset_in_MoveY,
+            //    transform.position.z);
+
+            y_offset_in_MoveY = 0;
+            //transform.LookAt(ModelController.Instance.GetModelHead().transform);
+
+            need_reset_camera_position = false;
+        }
+
         delta *= In ? 1 : -1;
 
-        float x = transform.position.x;
-        float y = transform.position.y;
+        Vector3 direction = ModelController.Instance.GetModelHead().transform.position - transform.position;
+        direction.Normalize();
+        //transform.Translate(Camera.main.transform.forward * delta, Space.World);
+        transform.Translate(direction * delta, Space.World);
 
-        transform.Translate(Vector3.forward * delta);
-        //transform.Translate(zoom_direction * delta);
+        StoreCameraPosition();
+    }
 
-        float z = transform.position.z;
-        float min = -40, max = 20;
-        z = Mathf.Clamp(z, min, max);
-        transform.position = new Vector3(x, y, z);
-
-        InZoomMode = z >= -3f;
-
-        Debug.Log("z = " + z);
+    private void StoreCameraPosition()
+    {
+        camera_pos = transform.position;
     }
 }
