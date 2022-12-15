@@ -65,8 +65,13 @@ public class ModelController : MonoBehaviour
         model.ResetPosition();
     }
 
-    public void LerpModelYtoOriginIfNeeded()
+    public void LerpModelYtoOrigin(float delta)
     {
-        model.LerpModelYtoOriginIfNeeded();
+        model.LerpModelYtoOrigin(delta);
+    }
+
+    public void LerpModelYtoTop(float delta)
+    {
+        model.LerpModelYtoTop(delta);
     }
 }

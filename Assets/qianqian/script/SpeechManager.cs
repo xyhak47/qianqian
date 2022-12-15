@@ -117,7 +117,8 @@ public class SpeechManager : MonoBehaviour
             if (response.Success)
             {
                 float duration = response.clip.length;
-                string type = duration >= 3f ? ModelAnimation.Type.talk_long : ModelAnimation.Type.talk_short;
+                //tring type = duration >= 3f ? ModelAnimation.Type.talk_long : ModelAnimation.Type.talk_short;
+                string type = ModelAnimation.Type.talk_short;
 
                 duration -= 0.75f;
                 ModelAnimationController.Instance.Play(type, duration, null);

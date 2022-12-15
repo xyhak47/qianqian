@@ -11,6 +11,9 @@ public class Model : MonoBehaviour
 
     private Vector3 origin_postion;
 
+    float min = -38f, max = -4f;
+
+    private Vector3 top_postion;
 
     private void Awake()
     {
@@ -21,6 +24,9 @@ public class Model : MonoBehaviour
     void Start()
     {
         origin_postion = transform.position;
+
+        top_postion = origin_postion;
+        top_postion.y = min;
     }
 
     // Update is called once per frame
@@ -65,7 +71,7 @@ public class Model : MonoBehaviour
         float z = transform.position.z;
         float y = transform.position.y;
         y += delta;
-        float min = -38f, max = -4f;
+
         y = Mathf.Clamp(y, min, max);
         transform.position = new Vector3(x, y, z);
     }
@@ -75,8 +81,14 @@ public class Model : MonoBehaviour
         transform.position = origin_postion;
     }
 
-    public void LerpModelYtoOriginIfNeeded()
+
+    public void LerpModelYtoOrigin(float delta)
     {
-        transform.position = Vector3.Lerp(transform.position, origin_postion, 0.1f);
+        transform.position = Vector3.Lerp(transform.position, origin_postion, delta);
+    }
+
+    public void LerpModelYtoTop(float delta)
+    {
+        transform.position = Vector3.Lerp(transform.position, top_postion, delta);
     }
 }

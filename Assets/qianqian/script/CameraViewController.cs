@@ -34,6 +34,9 @@ public class CameraViewController : MonoBehaviour
         camerarotate();
         camerazoom();
 
+        Vector3 direction = Camera.main.transform.forward + ModelController.Instance.GetModelHead().transform.localPosition;
+
+        Debug.DrawRay(transform.position, direction, Color.red);
         //Debug.Log(transform.position.x + " " + transform.position.y + " " + transform.position.z);
 #endif
     }
@@ -77,7 +80,7 @@ public class CameraViewController : MonoBehaviour
 
         float roateSpeed = 5f;
         float rotatedAngle = transform.eulerAngles.x + y * roateSpeed;
-        float angle_min = 5f, angle_max = 40f;
+        float angle_min = 0f, angle_max = 40f;
 
         if (rotatedAngle <= angle_min)
         {
@@ -139,38 +142,63 @@ public class CameraViewController : MonoBehaviour
     {
         //use camera fov
         delta *= !In ? 1 : -1;
-        delta *= 0.3f;
+        delta *= 1.1f;
         float fov = Camera.main.fieldOfView;
         fov += delta;
         float min = 6f, max = 36f;
         fov = Mathf.Clamp(fov, min, max);
         Camera.main.fieldOfView = fov;
 
-        InZoomMode = fov <= 26f;
+        InZoomMode = fov <= 32f;
 
-        if (!In && fov == max)
+        //if (!In && fov == max)
+        //{
+        //    ModelController.Instance.LerpModelYtoOriginIfNeeded();
+        //}
+        float input_x = 1 - fov / max;
+        float output_y = 1 - 5 * input_x / 6;
+        output_y = (1 / output_y - 1) /5;
+
+        if (In)
         {
-            ModelController.Instance.LerpModelYtoOriginIfNeeded();
+            //if(fov <=22.5f)
+            {
+                ModelController.Instance.LerpModelYtoTop(output_y);
+            }
+        }
+        else
+        {
+            ModelController.Instance.LerpModelYtoOrigin(1/output_y);
         }
 
         return;
 
 
         float distance = Vector3.Distance(transform.position, target.transform.position);
-        //Debug.Log("distance in zoom = " + distance + " In = " + In);
-        float limit_near = 50f;
+        Debug.Log("distance in zoom = " + distance + " In = " + In);
+        float limit_near = 38f;
         float limit_far = origin_distance;
         bool too_near = distance <= limit_near;
         bool too_far = distance >= limit_far;
 
-        if (In && too_near) return;
-        if (!In && too_far) return;
+        InZoomMode = distance <= 90f;
 
-        InZoomMode = distance <= 70f;
+        if (In && too_near)
+        {
+            //ModelController.Instance.LerpModelYtoTop(0.12f);
+            return;
+        }
+
+        if (!In && too_far)
+        {
+            //ModelController.Instance.LerpModelYtoOrigin(0.12f);
+            return;
+        }
+
 
         if (!In && need_reset_camera_position && InZoomMode)
         {
-            ModelController.Instance.ResetPosition();
+            //ModelController.Instance.ResetPosition();
 
             //transform.position = camera_pos;
             //transform.position = new Vector3(
@@ -178,18 +206,38 @@ public class CameraViewController : MonoBehaviour
             //    transform.position.y - y_offset_in_MoveY,
             //    transform.position.z);
 
-            y_offset_in_MoveY = 0;
+            //y_offset_in_MoveY = 0;
             //transform.LookAt(ModelController.Instance.GetModelHead().transform);
 
             need_reset_camera_position = false;
         }
 
+
+
         delta *= In ? 1 : -1;
 
         Vector3 direction = ModelController.Instance.GetModelHead().transform.position - transform.position;
+        //Vector3 direction = Camera.main.transform.forward + ModelController.Instance.GetModelHead().transform.localPosition;
+
         direction.Normalize();
         //transform.Translate(Camera.main.transform.forward * delta, Space.World);
         transform.Translate(direction * delta, Space.World);
+
+        float x = transform.position.x;
+        float z = transform.position.z;
+        float y = transform.position.y;
+
+        float min_z = -38f, max_z = 33f;
+        z = Mathf.Clamp(z, min_z, max_z);
+
+        //float min_y = -22.5f, max_y = 12.5f;
+        //y = Mathf.Clamp(y, min_y, max_y);
+        if(!In && z == min_z)
+        {
+            //y = Mathf.Lerp(0, y, 0.1f);
+        }
+
+        //transform.position = new Vector3(x, y, z);
 
         StoreCameraPosition();
     }
