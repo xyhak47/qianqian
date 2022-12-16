@@ -8,21 +8,24 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: hair
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ValidKeywords:
+  m_Shader: {fileID: 4800000, guid: 67dbb554458757d4786c21e8a658cc51, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _ALPHABLEND_ON
   - _NORMALMAP
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AnisoDir:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Bump:
         m_Texture: {fileID: 2800000, guid: 397bf49d25582384bae957844fd3cf6b, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -63,6 +66,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: 397bf49d25582384bae957844fd3cf6b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 2800000, guid: 386a9dfb22dd16d44bdcbee6b69ae211, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -84,6 +91,7 @@ Material:
     - _AlphaBlend: 1
     - _AlphaTest: 1
     - _BumpScale: 1
+    - _Cull: 2
     - _Cutoff: 0.284
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
@@ -96,13 +104,19 @@ Material:
     - _MainSpecularSmooth: -10
     - _Metallic: 0
     - _Mode: 2
+    - _NormalScale: 1
     - _OcclusionStrength: 1
     - _OutlineWidth: 0
     - _Parallax: 0.005
+    - _PrimaryShift: -1.28
     - _RimPower: 10
+    - _SecondaryShift: 0.7
     - _Shininess: 1
     - _SmoothnessTextureChannel: 0
+    - _Specular: 0.36
     - _SpecularHighlights: 1
+    - _SpecularMultiplier: 100
+    - _SpecularMultiplier2: 100
     - _SpecularScale: 0.36
     - _SrcBlend: 5
     - _UVSec: 0
@@ -110,7 +124,10 @@ Material:
     m_Colors:
     - _Color: {r: 0.25490198, g: 0.15294118, b: 0.12941177, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MainColor: {r: 0.49056602, g: 0.3127193, b: 0.3127193, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.25490198, g: 0.15294118, b: 0.12941177, a: 1}
     - _Specular: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor2: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_BuildTextureStacks: []
