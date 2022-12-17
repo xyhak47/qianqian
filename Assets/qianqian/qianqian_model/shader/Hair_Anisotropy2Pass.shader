@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Character/Hair/Hair_Anisotropy2Pass" 
+Shader "Custom/Standard_Hair" 
 {
 	Properties 
 	{

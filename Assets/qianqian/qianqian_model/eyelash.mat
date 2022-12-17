@@ -7,17 +7,18 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: hair
-  m_Shader: {fileID: 4800000, guid: 67dbb554458757d4786c21e8a658cc51, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_Name: eyelash
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ValidKeywords:
   - _ALPHABLEND_ON
   - _NORMALMAP
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -91,14 +92,14 @@ Material:
     - _AlphaBlend: 1
     - _AlphaTest: 1
     - _BumpScale: 1
-    - _Cull: 0
-    - _Cutoff: 0.3
+    - _Cull: 2
+    - _Cutoff: 0.284
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _FuSpecularOff: -9.5
     - _FuSpecularSmooth: 63.3
     - _GlossMapScale: 0
-    - _Glossiness: 0.683
+    - _Glossiness: 0.514
     - _GlossyReflections: 1
     - _MainSpecularOff: -0.8
     - _MainSpecularSmooth: -10
@@ -110,10 +111,10 @@ Material:
     - _Parallax: 0.005
     - _PrimaryShift: -1.28
     - _RimPower: 10
-    - _SecondaryShift: -1.24
+    - _SecondaryShift: 0.7
     - _Shininess: 1
     - _SmoothnessTextureChannel: 0
-    - _Specular: 0.3
+    - _Specular: 0.36
     - _SpecularHighlights: 1
     - _SpecularMultiplier: 100
     - _SpecularMultiplier2: 100
