@@ -3,6 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Speech
+{
+    public string keyword;
+    public string content;
+
+    public Queue<Strategy> queue_strategy;
+}
+
+
+
 public class SpeechMatcher : MonoBehaviour
 {
     public static SpeechMatcher Instance = null;
@@ -11,14 +21,43 @@ public class SpeechMatcher : MonoBehaviour
         Instance = this;
     }
 
+
+    public static string KEY_recommend = "推荐";
+
+
+
+
+    private List<Speech> List_Speech = new List<Speech>();
+
+
+
     private void Start()
     {
         
     }
 
-    public string Match(string speech)
+    public Speech Match(string key)
     {
-        return GetSpeech(speech);
+        //Speech speech = List_Speech.Find(s => s.keyword == key);
+        //if(speech == null)
+        //{
+        //    speech = new Speech();
+        //    speech.keyword = key;
+        //    speech.content = GetSpeech(key);
+
+        //    speech.queue_strategy = SpeechStrategyManager.Instance.GetStrategyQueue(key);
+
+        //    List_Speech.Add(speech);
+        //}
+
+        Speech speech = new Speech();
+        speech.keyword = key;
+        speech.content = GetSpeech(key);
+
+        speech.queue_strategy = SpeechStrategyManager.Instance.GetStrategyQueue(key);
+
+
+        return speech;
     }
 
     private string GetSpeech(string key)
@@ -42,12 +81,13 @@ public class SpeechMatcher : MonoBehaviour
         {
             return "今天晴朗，适合散步哦";
         }
-        else if (key.Contains("推荐"))
+        else if (key.Contains(KEY_recommend))
         {
-            return "西湖,苏堤等等,西湖无疑是杭州之美的代表，" +
-                "自然与人文相互映衬，" +
-                "你不妨花上半天或一天在湖边徜徉一番，" +
-                "无论怎么玩，都让人心情舒畅。";
+            //return "西湖,苏堤等等,西湖无疑是杭州之美的代表，" +
+            //    "自然与人文相互映衬，" +
+            //    "你不妨花上半天或一天在湖边徜徉一番，" +
+            //    "无论怎么玩，都让人心情舒畅。";
+            return "西湖,无疑是杭州之美的代表,自然与人文相互映衬,你不妨花上半天,在湖边徜徉一番,无论怎么玩,都让人心情舒畅";
         }
 
         return "听不清，再说一遍";

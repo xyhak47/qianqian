@@ -87,7 +87,9 @@ public class SpeechManager : MonoBehaviour
             }
             else
             {
-                Synthesis("听不清，再说一遍");
+                Speech temp = new Speech();
+                temp.content = "听不清，再说一遍";
+                Synthesis(temp);
                 UIHandler.Instance.ShowRecognizedSpeech("未识别:" + s.err_msg);
             }
         }));
@@ -95,19 +97,19 @@ public class SpeechManager : MonoBehaviour
         InUserInput = false;
     }
 
-    public void SynthesisSpeech(string speech)
+    public void SynthesisSpeech(string key)
     {
-        string matched_speech = SpeechMatcher.Instance.Match(speech);
+        Speech matched_speech = SpeechMatcher.Instance.Match(key);
 
-        string question_and_answer = "question = " + speech + " answer = " + matched_speech;
+        string question_and_answer = "question = " + matched_speech.keyword + " answer = " + matched_speech.content;
         UIHandler.Instance.ShowRecognizedSpeech(question_and_answer);
 
         Synthesis(matched_speech);
     }
 
-    private void Synthesis(string speech)
+    private void Synthesis(Speech speech)
     {
-        StartCoroutine(_tts.Synthesis(speech, response =>
+        StartCoroutine(_tts.Synthesis(speech.content, response =>
         {
             if(InUserInput)
             {
@@ -116,26 +118,59 @@ public class SpeechManager : MonoBehaviour
 
             if (response.Success)
             {
-                float duration = response.clip.length;
-                //tring type = duration >= 3f ? ModelAnimation.Type.talk_long : ModelAnimation.Type.talk_short;
-                string type = ModelAnimation.Type.talk_short;
-
-                duration -= 0.75f;
-                ModelAnimationController.Instance.Play(type, duration, null);
-
-                //if(type == ModelAnimation.Type.talk_short)
-                //{
-                //    ModelAnimationController.Instance.Play(ModelAnimation.Type.eye, duration, null);
-                //}
-
-
-                _audioSource.clip = response.clip;
-                _audioSource.Play();
+                StartCoroutine(HandleSpeechContent(response.clip, speech));
             }
             else
             {
             }
         }));
+    }
+
+    private IEnumerator HandleSpeechContent(AudioClip clip, Speech speech)
+    {
+        float total_duration = clip.length;
+        //tring type = duration >= 3f ? ModelAnimation.Type.talk_long : ModelAnimation.Type.talk_short;
+        string animation_type = ModelAnimation.Type.talk_short;
+
+        total_duration -= 0.75f;
+        _audioSource.clip = clip;
+
+
+        //保存录音
+        //string outPath = Application.streamingAssetsPath;
+        //WavUtility.FromAudioClip(clip, out outPath, true);
+
+
+        Queue<Strategy> queue_strategy = speech.queue_strategy;
+        if(queue_strategy == null)
+        {
+            ModelAnimationController.Instance.Play(animation_type, total_duration, null);
+            _audioSource.Play();
+        }
+        else
+        {
+            while (queue_strategy.Count != 0)
+            {
+                Strategy strategy = queue_strategy.Dequeue();
+                //Debug.Log(strategy.type);
+                if(strategy.type == Strategy.Type.talk)
+                {
+                    ModelAnimationController.Instance.Play(animation_type);
+                    _audioSource.time = strategy.begin;
+                    _audioSource.Play();
+                    yield return new WaitForSeconds(strategy.duration);
+                    _audioSource.Pause();
+                }
+                else if(strategy.type == Strategy.Type.wait)
+                {
+                    ModelAnimationController.Instance.Play(ModelAnimation.Type.idle);
+                    yield return new WaitForSeconds(1f);
+                }
+            }
+        }
+
+
+        yield break;
     }
 
     public void CheckDevice()
