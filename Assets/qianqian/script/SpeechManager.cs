@@ -155,7 +155,8 @@ public class SpeechManager : MonoBehaviour
                 //Debug.Log(strategy.type);
                 if(strategy.type == Strategy.Type.talk)
                 {
-                    ModelAnimationController.Instance.Play(animation_type);
+                    //ModelAnimationController.Instance.Play(animation_type);
+                    ModelAnimationController.Instance.SetTalkLayerWeight(1);
                     _audioSource.time = strategy.begin;
                     _audioSource.Play();
                     yield return new WaitForSeconds(strategy.duration);
@@ -163,10 +164,19 @@ public class SpeechManager : MonoBehaviour
                 }
                 else if(strategy.type == Strategy.Type.wait)
                 {
-                    ModelAnimationController.Instance.Play(ModelAnimation.Type.idle);
-                    yield return new WaitForSeconds(1f);
+                    //ModelAnimationController.Instance.Play(ModelAnimation.Type.idle);
+                    ModelAnimationController.Instance.SetTalkLayerWeight(0);
+
+                    //float wait_sec = UIHandler.Instance.slider.value;
+                    //yield return new WaitForSeconds(wait_sec);
+
+                    yield return new WaitForSeconds(0.28f);
+
                 }
             }
+
+            // rewind 
+            _audioSource.time = 0f;
         }
 
 
@@ -194,7 +204,7 @@ public class SpeechManager : MonoBehaviour
 
         _audioSource.Stop();
 
-        ModelAnimationController.Instance.Play(ModelAnimation.Type.idle);
+        ModelAnimationController.Instance.ResetSelf();
     }
 
 }

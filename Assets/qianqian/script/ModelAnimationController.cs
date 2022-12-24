@@ -32,11 +32,15 @@ public class ModelAnimationController : MonoBehaviour
 
     private IEnumerator _Play(string name, float duration, Action callback)
     {
-        Play(name);
-        yield return new WaitForSeconds(duration);
-        Play(ModelAnimation.Type.idle);
+        //Play(name);
+        //yield return new WaitForSeconds(duration);
+        //Play(ModelAnimation.Type.idle);
 
-        if(callback != null)
+        SetTalkLayerWeight(1);
+        yield return new WaitForSeconds(duration);
+        SetTalkLayerWeight(0);
+
+        if (callback != null)
         {
             callback();
         }
@@ -46,4 +50,15 @@ public class ModelAnimationController : MonoBehaviour
     {
         StartCoroutine(_Play(name, duration, callback));
     }
+
+    public void SetTalkLayerWeight(float weight)
+    {
+        model_ani.SetTalkLayerWeight(weight);
+    }
+
+    public void ResetSelf()
+    {
+        SetTalkLayerWeight(0);
+    }
+    
 }

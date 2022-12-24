@@ -27,6 +27,10 @@ public class UIHandler : MonoBehaviour
     private bool isLoading = false;
 
 
+    public Slider slider;
+    public Text slider_value_text;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,13 +54,19 @@ public class UIHandler : MonoBehaviour
         btn_test.onClick.AddListener(() => 
         {
             //SpeechManager.Instance.SynthesisSpeech("你好");
-            ModelAnimationController.Instance.Play(ModelAnimation.Type.smile);
+            //ModelAnimationController.Instance.Play(ModelAnimation.Type.smile);
         });
 
         btn_test1.onClick.AddListener(() =>
         {
             //SpeechManager.Instance.CheckDevice();
-            ModelAnimationController.Instance.Play(ModelAnimation.Type.idle);
+            //ModelAnimationController.Instance.Play(ModelAnimation.Type.idle);
+        });
+
+        slider_value_text.text = "间隔时间秒:" + slider.value.ToString();
+        slider.onValueChanged.AddListener((float value) =>
+        {
+            slider_value_text.text = "间隔时间秒:" + value.ToString();
         });
     }
 
@@ -69,6 +79,4 @@ public class UIHandler : MonoBehaviour
     {
         isLoading = loading;
     }
-
-
 }

@@ -20,6 +20,9 @@ public class ModelAnimation : MonoBehaviour
 
     private Animator animator;
 
+
+    private float target_weight_talk = 0;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -30,8 +33,25 @@ public class ModelAnimation : MonoBehaviour
     {
     }
 
+    private void Update()
+    {
+        LerpTalkWeight();
+    }
+
     public void Play(string name)
     {
         animator.SetTrigger(name);
+    }
+
+    public void SetTalkLayerWeight(float weight)
+    {
+        target_weight_talk = weight;
+    }
+
+    private void LerpTalkWeight()
+    {
+        float current_weight = animator.GetLayerWeight(animator.GetLayerIndex("talk"));
+        float lerp = Mathf.Lerp(current_weight, target_weight_talk, Time.deltaTime * 10f);
+        animator.SetLayerWeight(animator.GetLayerIndex("talk"), lerp);
     }
 }
