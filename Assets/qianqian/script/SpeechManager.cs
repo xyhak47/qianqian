@@ -25,6 +25,8 @@ public class SpeechManager : MonoBehaviour
     private bool InUserInput = false;
 
 
+    public bool save_clip = false;
+
     private void Start()
     {
         CheckDevice();
@@ -137,14 +139,19 @@ public class SpeechManager : MonoBehaviour
 
 
         //±£´æÂ¼Òô
-        //string outPath = Application.streamingAssetsPath;
-        //WavUtility.FromAudioClip(clip, out outPath, true);
+        if(save_clip)
+        {
+            string outPath = Application.streamingAssetsPath;
+            WavUtility.FromAudioClip(clip, out outPath, true);
+        }
+
 
 
         Queue<Strategy> queue_strategy = speech.queue_strategy;
         if(queue_strategy == null)
         {
             ModelAnimationController.Instance.Play(animation_type, total_duration, null);
+            //Debug.Log("_audioSource.timeSamples = " + _audioSource.timeSamples);
             _audioSource.Play();
         }
         else
@@ -202,6 +209,7 @@ public class SpeechManager : MonoBehaviour
     {
         StopAllCoroutines();
 
+        _audioSource.time = 0f;
         _audioSource.Stop();
 
         ModelAnimationController.Instance.ResetSelf();
