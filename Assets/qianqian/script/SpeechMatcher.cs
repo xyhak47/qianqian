@@ -64,7 +64,6 @@ public class SpeechMatcher : MonoBehaviour
     {
         if(key.Contains("您好") || 
             key.Contains("你好") ||
-            key.Contains("好") ||
             key.Contains("名字"))
         {
             //return "Hello 大家好，我是芊芊，欢迎来到分身世界，" +
